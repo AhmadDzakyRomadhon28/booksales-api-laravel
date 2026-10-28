@@ -6,11 +6,13 @@ use App\Models\Genre;
 
 class GenreController extends Controller
 {
-    public function index()
-    {
-        $genreModel = new Genre();
-        $genres = $genreModel->getGenres();
+    public function index() {
+        $genres = Genre::all();
 
-        return view('genres', ['genres' => $genres]);
+        return Response()->json([
+            "success" => true,
+            "message" => "Get all resource",
+            "data" => $genres
+        ], 200);
     }
 }

@@ -6,11 +6,13 @@ use App\Models\Author;
 
 class AuthorController extends Controller
 {
-    public function index()
-    {
-        $authorModel = new Author();
-        $authors = $authorModel->getAuthors();
+    public function index() {
+        $authors = Author::all();
 
-        return view('authors', ['authors' => $authors]);
+        return Response()->json([
+            "success" => true,
+            "message" => "Get all resource",
+            "data" => $authors
+        ], 200);
     }
 }
