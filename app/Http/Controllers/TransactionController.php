@@ -85,4 +85,41 @@ class TransactionController extends Controller
                 'data' => $transactions
             ], 201);
     }
+
+        public function show(string $id)
+    {
+        $transaction = Transaction::with(['user', 'book'])->find($id);
+
+        if (!$transaction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data transaksi tidak ditemukan!'
+            ], 404);
+    }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Data Transaksi',
+                'data'    => $transaction
+            ], 200);
+    }
+
+    public function destroy(string $id)
+    {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data transaksi tidak ditemukan!'
+            ], 404);
+    }
+
+        $transaction->delete();
+
+            return response()->json([
+                'success' => true,
+                 'message' => 'Data transaksi berhasil dihapus!'
+            ], 200);
+    }
 }
